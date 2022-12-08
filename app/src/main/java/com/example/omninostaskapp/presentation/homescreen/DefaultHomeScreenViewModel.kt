@@ -61,6 +61,8 @@ class DefaultHomeScreenViewModel @Inject constructor(
         phn: String, pass: String
     ) {
         viewModelScope.launch {
+            _loadErrorChangePassword.value = ""
+            _isSuccessChangePassword.value = false
             val result = repository.changePassword(
                 phone = phn,
                 newPassword = pass
@@ -70,6 +72,7 @@ class DefaultHomeScreenViewModel @Inject constructor(
             } else {
                 if (result.data!!.body()!!.success == "1") {
                     _isSuccessChangePassword.value = true
+                    _loadErrorChangePassword.value = ""
                 } else {
                     _loadErrorChangePassword.value = result.data!!.body()!!.message
                 }
@@ -82,6 +85,10 @@ class DefaultHomeScreenViewModel @Inject constructor(
         phn: String
     ) {
         viewModelScope.launch {
+
+            _loadErrorForgotPassword.value = ""
+            _isSuccessForgotPassword.value = false
+
             val result = repository.forgotPassword(
                 phone = phn
             )
@@ -91,6 +98,7 @@ class DefaultHomeScreenViewModel @Inject constructor(
             } else {
                 if (result.data!!.body()!!.success == "1") {
                     _isSuccessForgotPassword.value = true
+                    _loadErrorForgotPassword.value = ""
                 } else {
                     _loadErrorForgotPassword.value = result.data!!.body()!!.message
                 }
